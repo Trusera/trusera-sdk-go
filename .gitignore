@@ -31,3 +31,9 @@ Thumbs.db
 # Coverage
 coverage.txt
 coverage.html
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key

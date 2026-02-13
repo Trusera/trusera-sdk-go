@@ -2,7 +2,7 @@
 
 **Date**: 2026-02-13  
 **SDK**: trusera-sdk-go v0.1.0  
-**Location**: `/home/elios/Desktop/Trusera/Trusera-opensource/trusera-sdk-go/`
+**Repository**: `github.com/Trusera/trusera-sdk-go`
 
 ## Specification Compliance
 
