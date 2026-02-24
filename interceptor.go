@@ -69,7 +69,7 @@ func (t *interceptingTransport) RoundTrip(req *http.Request) (*http.Response, er
 	if req.Body != nil {
 		bodyBytes, err := io.ReadAll(req.Body)
 		if err == nil {
-			req.Body.Close()
+			_ = req.Body.Close()
 			req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 
 			if len(bodyBytes) > maxBodySnippet {
@@ -196,7 +196,7 @@ func MustRegisterAndIntercept(apiKey, agentName, framework string, opts Intercep
 
 	_, err := client.RegisterAgent(agentName, framework)
 	if err != nil {
-		client.Close()
+		_ = client.Close()
 		return nil, nil, fmt.Errorf("failed to register agent: %w", err)
 	}
 

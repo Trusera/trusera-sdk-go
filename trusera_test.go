@@ -219,7 +219,7 @@ func TestBackgroundFlusher(t *testing.T) {
 
 	time.Sleep(250 * time.Millisecond)
 
-	client.Close()
+	_ = client.Close()
 
 	mu.Lock()
 	if flushCount < 1 {

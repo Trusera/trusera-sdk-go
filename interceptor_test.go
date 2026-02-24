@@ -40,7 +40,7 @@ func TestWrapHTTPClient(t *testing.T) {
 func TestInterceptorRecordsRequests(t *testing.T) {
 	backend := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("success"))
+		_, _ = w.Write([]byte("success"))
 	}))
 	defer backend.Close()
 
