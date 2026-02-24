@@ -60,7 +60,7 @@ func TestInterceptorRecordsRequests(t *testing.T) {
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}
-	resp.Body.Close()
+	_ = resp.Body.Close()
 
 	time.Sleep(50 * time.Millisecond)
 
@@ -96,7 +96,7 @@ func TestExcludePatterns(t *testing.T) {
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}
-	resp.Body.Close()
+	_ = resp.Body.Close()
 
 	time.Sleep(50 * time.Millisecond)
 
@@ -139,7 +139,7 @@ func TestBlockModeRejectsRequests(t *testing.T) {
 	}
 
 	if resp != nil {
-		resp.Body.Close()
+		_ = resp.Body.Close()
 	}
 }
 
@@ -168,7 +168,7 @@ func TestWarnModeAllowsBlockedRequests(t *testing.T) {
 	if err != nil {
 		t.Fatalf("request should succeed in warn mode: %v", err)
 	}
-	resp.Body.Close()
+	_ = resp.Body.Close()
 
 	if !backendCalled {
 		t.Error("backend should be called in warn mode")
@@ -204,7 +204,7 @@ func TestLogModeAllowsAllRequests(t *testing.T) {
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}
-	resp.Body.Close()
+	_ = resp.Body.Close()
 
 	if !backendCalled {
 		t.Error("backend should be called in log mode")
@@ -272,7 +272,7 @@ func TestRequestBodyCapture(t *testing.T) {
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}
-	resp.Body.Close()
+	_ = resp.Body.Close()
 }
 
 func TestCreateInterceptedClient(t *testing.T) {
@@ -327,7 +327,7 @@ func TestConcurrentRequests(t *testing.T) {
 				t.Errorf("concurrent request failed: %v", err)
 				return
 			}
-			resp.Body.Close()
+			_ = resp.Body.Close()
 		}()
 	}
 

@@ -42,7 +42,7 @@ func main() {
 		log.Printf("Error: %v", err)
 	} else {
 		fmt.Printf("Success: %s\n", resp.Status)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 	}
 
 	// Example 2: Blocked request
@@ -53,7 +53,7 @@ func main() {
 		// This is expected - request was blocked by policy
 	} else {
 		fmt.Printf("Unexpected success: %s\n", resp.Status)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 	}
 
 	// Example 3: Another blocked request
@@ -63,7 +63,7 @@ func main() {
 		fmt.Printf("Blocked: %v\n", err)
 	} else {
 		fmt.Printf("Unexpected success: %s\n", resp.Status)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 	}
 
 	fmt.Println("\n=== Summary ===")

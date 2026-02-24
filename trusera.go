@@ -150,7 +150,7 @@ func (c *Client) Flush() error {
 	if err != nil {
 		return fmt.Errorf("failed to send events: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode >= 400 {
 		return fmt.Errorf("API returned status %d", resp.StatusCode)
@@ -187,7 +187,7 @@ func (c *Client) RegisterAgent(name, framework string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to register agent: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode >= 400 {
 		return "", fmt.Errorf("API returned status %d", resp.StatusCode)

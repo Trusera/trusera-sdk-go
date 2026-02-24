@@ -43,7 +43,7 @@ func main() {
 		log.Printf("Request failed: %v", err)
 	} else {
 		fmt.Printf("Status: %s\n", resp.Status)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 	}
 
 	// Example 2: Request to blocked domain (warned in warn mode)
@@ -53,7 +53,7 @@ func main() {
 		log.Printf("Request blocked: %v", err)
 	} else {
 		fmt.Printf("Status: %s (allowed in warn mode)\n", resp.Status)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 	}
 
 	// Example 3: POST request with body
@@ -67,7 +67,7 @@ func main() {
 		log.Printf("Request failed: %v", err)
 	} else {
 		fmt.Printf("Status: %s\n", resp.Status)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 	}
 
 	// Flush events before exit
