@@ -158,6 +158,8 @@ func (t *interceptingTransport) isBlocked(url string) bool {
 	return false
 }
 
+const redactedValue = "[REDACTED]"
+
 // sanitizeHeaders removes sensitive headers from logging
 func sanitizeHeaders(headers http.Header) map[string]string {
 	sanitized := make(map[string]string)
@@ -171,7 +173,7 @@ func sanitizeHeaders(headers http.Header) map[string]string {
 	for key, values := range headers {
 		lowerKey := strings.ToLower(key)
 		if sensitiveHeaders[lowerKey] {
-			sanitized[key] = "[REDACTED]"
+			sanitized[key] = redactedValue
 		} else if len(values) > 0 {
 			sanitized[key] = values[0]
 		}
