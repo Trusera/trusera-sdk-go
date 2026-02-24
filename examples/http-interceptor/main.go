@@ -17,7 +17,7 @@ func main() {
 		trusera.WithAgentID("web-agent"),
 		trusera.WithFlushInterval(30*time.Second),
 	)
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	// Wrap HTTP client with Trusera interception
 	httpClient := trusera.WrapHTTPClient(&http.Client{}, client, trusera.InterceptorOptions{

@@ -17,7 +17,7 @@ func TestWrapHTTPClient(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement: ModeLog,
@@ -50,7 +50,7 @@ func TestInterceptorRecordsRequests(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement: ModeLog,
@@ -85,7 +85,7 @@ func TestExcludePatterns(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement:     ModeLog,
@@ -122,7 +122,7 @@ func TestBlockModeRejectsRequests(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement:   ModeBlock,
@@ -157,7 +157,7 @@ func TestWarnModeAllowsBlockedRequests(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement:   ModeWarn,
@@ -193,7 +193,7 @@ func TestLogModeAllowsAllRequests(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement:   ModeLog,
@@ -259,7 +259,7 @@ func TestRequestBodyCapture(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement: ModeLog,
@@ -282,7 +282,7 @@ func TestCreateInterceptedClient(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := CreateInterceptedClient(truseraClient, InterceptorOptions{
 		Enforcement: ModeLog,
@@ -311,7 +311,7 @@ func TestConcurrentRequests(t *testing.T) {
 	defer truseraServer.Close()
 
 	truseraClient := NewClient("test-key", WithBaseURL(truseraServer.URL))
-	defer truseraClient.Close()
+	defer func() { _ = truseraClient.Close() }()
 
 	httpClient := WrapHTTPClient(&http.Client{}, truseraClient, InterceptorOptions{
 		Enforcement: ModeLog,

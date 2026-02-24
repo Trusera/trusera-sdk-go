@@ -11,7 +11,7 @@ import (
 
 func TestNewClient(t *testing.T) {
 	client := NewClient("test-api-key")
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	if client.apiKey != "test-api-key" {
 		t.Errorf("expected apiKey 'test-api-key', got %s", client.apiKey)
@@ -37,7 +37,7 @@ func TestClientWithOptions(t *testing.T) {
 		WithAgentID(customAgent),
 		WithBatchSize(customBatch),
 	)
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	if client.baseURL != customURL {
 		t.Errorf("expected baseURL %s, got %s", customURL, client.baseURL)
@@ -54,7 +54,7 @@ func TestClientWithOptions(t *testing.T) {
 
 func TestTrackEvent(t *testing.T) {
 	client := NewClient("test-key")
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	event := NewEvent(EventToolCall, "test-tool")
 
@@ -104,7 +104,7 @@ func TestFlush(t *testing.T) {
 	defer server.Close()
 
 	client := NewClient("test-key", WithBaseURL(server.URL))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	event1 := NewEvent(EventToolCall, "tool1")
 	event2 := NewEvent(EventAPICall, "api1")
@@ -165,12 +165,12 @@ func TestRegisterAgent(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(response)
+		_ = json.NewEncoder(w).Encode(response)
 	}))
 	defer server.Close()
 
 	client := NewClient("test-key", WithBaseURL(server.URL))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	agentID, err := client.RegisterAgent("test-agent", "langchain")
 	if err != nil {
@@ -188,7 +188,7 @@ func TestRegisterAgent(t *testing.T) {
 
 func TestRegisterAgentEmptyName(t *testing.T) {
 	client := NewClient("test-key")
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	_, err := client.RegisterAgent("", "framework")
 	if err == nil {
@@ -236,7 +236,7 @@ func TestBatchAutoFlush(t *testing.T) {
 		var payload struct {
 			Events []Event `json:"events"`
 		}
-		json.NewDecoder(r.Body).Decode(&payload)
+		_ = json.NewDecoder(r.Body).Decode(&payload)
 
 		mu.Lock()
 		receivedCount += len(payload.Events)
@@ -251,7 +251,7 @@ func TestBatchAutoFlush(t *testing.T) {
 		WithBaseURL(server.URL),
 		WithBatchSize(5),
 	)
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	for i := 0; i < 10; i++ {
 		event := NewEvent(EventToolCall, "tool")

@@ -31,7 +31,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to initialize: %v", err)
 	}
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	fmt.Println("Agent registered and HTTP client wrapped with block mode")
 

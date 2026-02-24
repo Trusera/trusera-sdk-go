@@ -15,7 +15,7 @@ func main() {
 		trusera.WithAgentID("my-agent-123"),
 		trusera.WithFlushInterval(10*time.Second),
 	)
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	// Track a tool call event
 	toolEvent := trusera.NewEvent(trusera.EventToolCall, "calculator").
