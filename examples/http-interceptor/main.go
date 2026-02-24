@@ -62,7 +62,7 @@ func main() {
 		io.NopCloser(io.Reader(nil)))
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err = httpClient.Do(req)
+	resp, err = httpClient.Do(req) // #nosec G704 -- example code with hardcoded URL
 	if err != nil {
 		log.Printf("Request failed: %v", err)
 	} else {
