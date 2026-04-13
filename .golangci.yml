@@ -30,6 +30,12 @@ linters:
     goconst:
       min-len: 2
       min-occurrences: 2
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - goconst
+          - dupl
 
 run:
   timeout: 5m
@@ -38,9 +44,3 @@ run:
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
-  exclusions:
-    rules:
-      - path: _test\.go
-        linters:
-          - goconst
-          - dupl
