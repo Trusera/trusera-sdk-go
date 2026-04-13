@@ -19,10 +19,6 @@ linters:
     - gocyclo
     - dupl
   settings:
-    govet:
-      settings:
-        shadow:
-          enabled: true
     gocyclo:
       min-complexity: 15
     dupl:
