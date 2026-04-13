@@ -138,7 +138,7 @@ func (c *Client) Flush() error {
 		return fmt.Errorf("failed to marshal events: %w", err)
 	}
 
-	req, err := http.NewRequest(http.MethodPost, c.baseURL+"/v1/events", bytes.NewReader(body))
+	req, err := http.NewRequest(http.MethodPost, c.baseURL+"/v1/events", bytes.NewReader(body)) // #nosec G704 -- URL built from operator-configured baseURL, not user-controlled input
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
 	}
@@ -146,7 +146,7 @@ func (c *Client) Flush() error {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.apiKey)
 
-	resp, err := c.httpClient.Do(req) // #nosec G704 -- URL constructed from configured baseURL
+	resp, err := c.httpClient.Do(req) // #nosec G704 -- same taint origin: operator-configured baseURL
 	if err != nil {
 		return fmt.Errorf("failed to send events: %w", err)
 	}
@@ -175,7 +175,7 @@ func (c *Client) RegisterAgent(name, framework string) (string, error) {
 		return "", fmt.Errorf("failed to marshal payload: %w", err)
 	}
 
-	req, err := http.NewRequest(http.MethodPost, c.baseURL+"/v1/agents", bytes.NewReader(body))
+	req, err := http.NewRequest(http.MethodPost, c.baseURL+"/v1/agents", bytes.NewReader(body)) // #nosec G704 -- URL built from operator-configured baseURL, not user-controlled input
 	if err != nil {
 		return "", fmt.Errorf("failed to create request: %w", err)
 	}
@@ -183,7 +183,7 @@ func (c *Client) RegisterAgent(name, framework string) (string, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.apiKey)
 
-	resp, err := c.httpClient.Do(req) // #nosec G704 -- URL constructed from configured baseURL
+	resp, err := c.httpClient.Do(req) // #nosec G704 -- same taint origin: operator-configured baseURL
 	if err != nil {
 		return "", fmt.Errorf("failed to register agent: %w", err)
 	}

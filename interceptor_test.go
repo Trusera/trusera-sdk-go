@@ -230,15 +230,15 @@ func TestSanitizeHeaders(t *testing.T) {
 		t.Error("User-Agent should not be redacted")
 	}
 
-	if sanitized["Authorization"] != "[REDACTED]" {
+	if sanitized["Authorization"] != redactedValue {
 		t.Error("Authorization should be redacted")
 	}
 
-	if sanitized["Cookie"] != "[REDACTED]" {
+	if sanitized["Cookie"] != redactedValue {
 		t.Error("Cookie should be redacted")
 	}
 
-	if sanitized["X-Api-Key"] != "[REDACTED]" {
+	if sanitized["X-Api-Key"] != redactedValue {
 		t.Error("X-Api-Key should be redacted")
 	}
 }
